@@ -1,0 +1,16 @@
+To control UFO vehicle, choose camera 4 and press any arrow key!
+
+WSAD, ZX - to control the UFO vehicle
+
+E - to drop the bomb
+
+T - to go out of the world (Magic Ball view)
+Y - to come back from the Magic Ball view
+I, U - to control the Magic Ball view
+
+H - to activate fireworks
+
+M - to activate the earthquake
+
+B - to activate the Blur Motion
+N - to deactivate the Blur Motion

@@ -1,0 +1,36 @@
+#version 440 core
+
+// Process particles in blocks of 128
+layout(local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
+// SSBO binding
+layout(std430, binding = 0) buffer PositionBuffer { vec4 positions[]; };
+layout(std430, binding = 1) buffer VelocityBuffer { vec4 velocities[]; };
+
+// Delta time
+uniform float delta_time;
+uniform vec3 max_dims;
+
+void main(void) {
+  uint index = gl_GlobalInvocationID.x;
+
+  // Read the current position and velocity from the buffers
+  vec4 vel = velocities[index];
+  vec4 pos = positions[index];
+
+  // *********************************
+  // Upadte new_pos with velocity and delta_tims
+  vec4 new_pos = pos + vel * delta_time;
+  // *********************************
+
+  // Keep all particles on screen
+  if (abs(new_pos.x) > max_dims.x) {
+    new_pos.x = 0.0;
+  } else if (abs(new_pos.y) > max_dims.y) {
+    new_pos.y = 0.0;
+  } else if (abs(new_pos.z) > max_dims.z) {
+    new_pos.z = 0.0;
+  }
+
+  // Store the new position and velocity back into the buffers
+  positions[index] = new_pos;
+}
